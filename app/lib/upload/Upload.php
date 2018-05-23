@@ -1,5 +1,7 @@
 <?php
 namespace app\lib\upload;
+use think\Image;
+
 class  Upload{
     public $fileName;
     public $maxImageSize;//允许上传的图片大小
@@ -51,7 +53,10 @@ class  Upload{
                 $this->error='创建文件失败！';
                 return false;
             }
+
             if(move_uploaded_file($this->fileInfo['tmp_name'], $this->destination)){
+                //裁剪图片
+                $this->crop($this->destination);
                 return  true;
             }
             return $this->error;
@@ -179,6 +184,12 @@ class  Upload{
             return $this->error;
       }
       return "http://".$_SERVER['SERVER_NAME'].'/'.$this->destination;
+    }
+    //图片裁剪
+    public function crop($file){
+        $image=Image::open($file);
+        $image->thumb(300,300)->save($file);
+
 
     }
    }

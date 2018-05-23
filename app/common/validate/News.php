@@ -15,7 +15,7 @@ class News extends Validate{
         'title.require' => '标题必须',
         'content.require'     => '内容不能为空',
         'title_url.require'   => '封面图片不能为空',
-        'create_atd.require'   => '创建时间不能为空',
+        'created_at.require'   => '创建时间不能为空',
     ];
         protected $scene = [
         'add'  =>  ['title','content','title_url','created_at'],

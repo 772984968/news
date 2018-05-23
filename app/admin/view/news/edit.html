@@ -17,9 +17,9 @@
 <body>
 <div class="layui-container"layui-bg-gray>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-  <legend>{$data['config']['add']['title']}</legend>
+  <legend>{$data['config']['edit']['title']}</legend>
 </fieldset>
-<form class="layui-form" action="{:url($data['config']['add']['url'])}" method="post">
+<form class="layui-form" action="{:url($data['config']['edit']['url'])}" method="post">
 			{volist name="data['option']" id="vo"}
 			{switch name=$vo['html']}
 			{case value="password" break="1"}
@@ -76,8 +76,10 @@
     <div class="layui-input-block">
     	{volist name="vo['option']" id="checkbox"}
       <input type="checkbox" name="{$vo['key']}[]" title="{$checkbox['name']}"
-      checked="checked"
-	   value="{$checkbox['id']}" >
+			 {in name="$checkbox['id']" value="$data['city']"}
+			 checked="checked"
+			 {/in}
+   	   value="{$checkbox['id']}" >
       {/volist}
     </div>
   </div>

@@ -4,9 +4,11 @@ namespace app\admin\controller;
 
 use app\common\model\News;
 use think\Controller;
+use think\Db;
 
 class NewsController extends TemplateController
 {
+
 
    public $config = [
      'modelName' => 'app\common\model\News', // 模型字段
@@ -94,25 +96,37 @@ class NewsController extends TemplateController
 
         $model=new $this->config['modelName'];
         if ($this->request->isAjax()){
-            if($model->allowField(true)->isUpdate(true)->save(input('post.'))){
+            $data=input('post.');
+            $model=new $this->config['modelName'];
+
+            $result = $this->validate($data,'News.add');
+            if(true !== $result){
+                return json(['code'=>400,'msg'=>$result]);
+            }
+            if($model->allowField(true)->isUpdate(true)->save($data)){
+
+                $model->city()->sync($data['cities']);
                 return  json(['code'=>200,'msg'=>'添加成功']);
             }else{
                 return json(['code'=>400,'msg'=>$model->getError]);
             }
         }
-        $attribute=$model::get(function ($query) {
+        $attribute=$model->get(function ($query) {
             $query->where(['id'=>input('id')]);
-        });
+        },'city');
         $option=$this->getOption();
         foreach ($option as $key=>$vo){
             if (isset($attribute[$vo['key']])){
                 $option[$key]['value']=$attribute->getData($vo['key']);
             }
-
         }
+
+        //所属城市
+        $city=array_column($attribute->city,'id');
         $option[]=['key'=>'id','title'=>'用户ID','value'=>$attribute['id'],'html'=>'hidden'];
         $data['option']=$option;
         $data['config']=$this->config;
+        $data['city']=$city;
         $this->assign('data',$data);
         return $this->fetch();
 
