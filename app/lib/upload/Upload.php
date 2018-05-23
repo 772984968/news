@@ -178,7 +178,7 @@ class  Upload{
         if ($this->error!=''||$this->destination==''){
             return $this->error;
       }
-      return $_SERVER['SERVER_NAME'].'/'.$this->destination;
+      return "http://".$_SERVER['SERVER_NAME'].'/'.$this->destination;
 
     }
-}
+   }

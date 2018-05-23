@@ -47,7 +47,14 @@ class BaseController extends Controller
         $auth->addLog();
         self::assign('menu',$list);
     }
-
+    public function upload(){
+        $uplaod=new app\lib\upload\Upload($_FILES['file']);
+        if ($uplaod->uploadImage()===true){
+         return json(['src'=>$uplaod->getUrl(),'code'=>200,'msg'=>'上传成功']);
+        }else{
+            return json(['code'=>400,'msg'=>'上传失败'.$uplaod->error]);
+        }
+    }
 
 
 }

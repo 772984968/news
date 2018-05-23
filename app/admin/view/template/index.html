@@ -87,14 +87,15 @@
 
 <script type="text/javascript">
 function layer_show(title,url){
-    layer.open({
+   var index= layer.open({
         type: 2,//类型
         title: title,
-        anim: 4,//打开方式
+        anim: 0,//打开方式
         maxmin: true, //开启最大化最小化按钮
-        area: ['1000px', '800px'],
+        area: ['800px','500px'],
         content:url
       });
+    layer.full(index);
 
 }
 </script>

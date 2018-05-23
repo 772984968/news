@@ -10,10 +10,10 @@ class Rbac {
     protected  $config = array(
         'rbac_on'           => true,                      // 认证开关
       //  'Rbac_type'         => 2,                         // 认证方式，1为实时认证；2为登录认证。
-        'rbac_access' => 'li_access', // 权限规则表
-        'rbac_role'         => 'li_role',         //用户角色表
-        'rbac_admin'         => 'li_admin'  ,           // 用户信息表
-        'rbac_log'         => 'li_system_log'             // 用户信息表
+        'rbac_access' => 'tp_access', // 权限规则表
+        'rbac_role'         => 'tp_role',         //用户角色表
+        'rbac_admin'         => 'tp_admin'  ,           // 用户信息表
+        'rbac_log'         => 'tp_system_log'             // 用户信息表
 
 
     );
