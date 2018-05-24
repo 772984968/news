@@ -81,8 +81,6 @@ class NewsController extends TemplateController
                 return json(['code'=>400,'msg'=>$result]);
             }
             if($model->allowField(true)->save($data)){
-
-                var_dump($data['cities']);die;
                 $model->city()->attach($data['cities']);
                 return  json(['code'=>200,'msg'=>'添加成功']);
             }else{

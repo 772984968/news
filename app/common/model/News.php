@@ -29,7 +29,7 @@ class News extends Model
 }*/
     public function city()
     {
-        return $this->belongsToMany('City','news_city','city_id','news_id');
+        return $this->belongsToMany('City','news_city');
     }
     public function category(){
         return $this->belongsTo('Category','category_id');
