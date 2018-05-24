@@ -6,6 +6,7 @@ use think\Model;
 
 class News extends Model
 {
+    protected $field = true;
     public function getTopAttr($value)
     {
         $state = [

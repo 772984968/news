@@ -40,7 +40,7 @@ class CityController extends TemplateController
     public function getOption()
     {
          return [
-              ['key'=>'name','title'=>'城市名称','value'=>'','html'=>'text','option'=>['placeholder'=>'请输入城市名称:如：北京市']],
+              ['key'=>'name','title'=>'城市名称','value'=>'','html'=>'text','option'=>['placeholder'=>'请输入城市名称:如：北京']],
              ['key'=>'default','title'=>'是否默认','value'=>'','html'=>'radio','option'=>[
                  ['id'=>1,'name'=>'是'],
                  ['id'=>0,'name'=>'否','check'=>'checked'],
