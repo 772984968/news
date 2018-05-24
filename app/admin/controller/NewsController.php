@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\common\model\News;
+use app\common\model\NewsCity;
 use think\Controller;
 use think\Db;
 
@@ -32,7 +33,31 @@ class NewsController extends TemplateController
        'delall'=>['title'=>'批量删除','url'=>'News/delall'],
      ];
 
+    // 显示首页
+    public function index()
+    {
+        if ($this->request->isAjax()){
+            return $this->getField();
+        }
+        $this->assign('data',$this->getData());
+        return $this->fetch();
+    }
+    // 获取字段
+    public function getField(){
+        $model=new $this->config['modelName'];
+        $page=input('page')??'1';
+        $limit=input('limit')??'10';
+        $where=[];
+        if (input('id')!=null){
+            $paramas=input('id');
+            $where['id']=['like','%'.$paramas.'%'];
+        }
+        $paginate=$model::with('category')->field($this->config['field'])->where($where)->paginate($limit,false,['page'=>$page]);
+        $data=$paginate->toArray();
+         return json(['code'=>0,'msg'=>'','count'=>$data['total'],'data'=>$data['data']]);
 
+
+    }
     public function getTitle()
     {
         return [[
@@ -43,7 +68,7 @@ class NewsController extends TemplateController
          ['field'=>'title_url','title'=>'封面图片'],
          ['field'=>'top','title'=>'是否置顶'],
          ['field'=>'sort','title'=>'排序','sort'=>true],
-            ['field'=>'category_id','title'=>'新闻类型','sort'=>true],
+            ['field'=>'category_id','title'=>'新闻类型','sort'=>true, 'templet'=>'#categoryTpl'],
          ['field'=>'created_at','title'=>'发布时间','sort'=>true],
          ['field'=>'right','title'=>'数据操作','align'=>'center','toolbar'=>'#barDemo','width'=>300],
          ]];
@@ -130,6 +155,17 @@ class NewsController extends TemplateController
         $this->assign('data',$data);
         return $this->fetch();
 
+    }
+    //删除
+    public  function del(){
+        $model=new $this->config['modelName'];
+        $ids=$this->request->post('id');
+        if($model::destroy($ids)){
+            NewsCity::where('news_id',$ids)->delete();
+            return  json(['code'=>200,'msg'=>'删除成功']);
+        }else{
+            return json(['code'=>400,'msg'=>$model->getError]);
+        }
     }
 
 }
