@@ -6,7 +6,9 @@ use think\Controller;
 use app\lib\factory\Factory;
 use think\Cache;
 
-
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials : true");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Connection, User-Agent, Cookie");
 /**
  *
  * @author Administrator
@@ -14,9 +16,9 @@ use think\Cache;
  */
 class BaseController extends Controller
 {
+
     public  function _initialize(){
-        header("Access-Control-Allow-Origin:*");
-        header("Access-Control-Allow-Credentials : true");
+
         $route=$this->request->controller().'/'.$this->request->action();
         $route = $route ? $route : 'Index/index';
         //不需要登录的方法
@@ -65,24 +67,14 @@ class BaseController extends Controller
 
     //返回错误信息
     public static function  jsonError($msg='系统错误',$code='400',$data=[]){
-        if (HUANG_JING===1){
-            // 允许 runapi.showdoc.cc 发起的跨域请求
-            header("Access-Control-Allow-Origin: http://runapi.showdoc.cc");
-            header("Access-Control-Allow-Credentials : true");
-        }
         header('Content-type: application/json');
        return json(['code'=>$code,'msg'=>$msg,'data'=>$data]);
 
    }
    //返回成功信息
    public static function jsonSuccess($data=[],$msg='ok',$code='200'){
-       if (HUANG_JING===1){
-           // 允许 runapi.showdoc.cc 发起的跨域请求
-           header("Access-Control-Allow-Origin: http://runapi.showdoc.cc");
-           header("Access-Control-Allow-Credentials : true");
-       }
-       header('Content-type: application/json');
-    return   json(['code'=>$code,'msg'=>$msg,'data'=>$data]);
+        header('Content-type: application/json');
+         return   json(['code'=>$code,'msg'=>$msg,'data'=>$data]);
 
 
    }
