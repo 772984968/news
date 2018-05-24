@@ -124,14 +124,12 @@ class NewsController extends TemplateController
                 $option[$key]['value']=$attribute->getData($vo['key']);
             }
         }
-
         //所属城市
         $city=array_column($attribute->city,'id');
         $option[]=['key'=>'id','title'=>'用户ID','value'=>$attribute['id'],'html'=>'hidden'];
         $data['option']=$option;
         $data['config']=$this->config;
         $data['city']=$city;
-        var_dump($data);die;
         $this->assign('data',$data);
         return $this->fetch();
 
