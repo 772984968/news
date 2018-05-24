@@ -188,7 +188,7 @@ class  Upload{
     //图片裁剪
     public function crop($file){
         $image=Image::open($file);
-        $image->thumb(300,300)->save($file);
+         $image->thumb(300,300)->save($file);
 
 
     }

@@ -12,9 +12,9 @@ class City extends Model
         $state = [0=>'否',1=>'是'];
         return $state[$value];
     }
-    public function city()
+    public function news()
     {
-        return $this->belongsToMany('News',NewsCity::class);
+        return $this->belongsToMany('News','news_city');
     }
 
 }

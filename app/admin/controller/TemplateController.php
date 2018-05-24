@@ -163,7 +163,7 @@ use think\console\Input;
         $model=new $this->config['modelName'];
         if ($this->request->isAjax()){
             if($model->allowField(true)->isUpdate(true)->save(input('post.'))){
-                return  json(['code'=>200,'msg'=>'添加成功']);
+                return  json(['code'=>200,'msg'=>'修改成功']);
             }else{
                 return json(['code'=>400,'msg'=>$model->getError]);
             }

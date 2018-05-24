@@ -5,7 +5,12 @@ return [
       'User/login',
       'Msg/sendregister',
       'Msg/sendfindpassoword',
-
+        //新闻首页
+        'News/index',
+        //定位
+        'News/location',
+        //新闻详情
+        'News/detail',
     ],
     //需要验证权限的方法
    'check'=>[

@@ -75,15 +75,15 @@ class BaseController extends Controller
 
    }
    //返回成功信息
-   public static function jsonSuccess($msg='ok',$code='200',$data=[]){
+   public static function jsonSuccess($data=[],$msg='ok',$code='200'){
        if (HUANG_JING===1){
            // 允许 runapi.showdoc.cc 发起的跨域请求
            header("Access-Control-Allow-Origin: http://runapi.showdoc.cc");
            header("Access-Control-Allow-Credentials : true");
        }
        header('Content-type: application/json');
-       echo json_encode(['code'=>$code,'msg'=>$msg,'data'=>$data]);
-       die();
+    return   json(['code'=>$code,'msg'=>$msg,'data'=>$data]);
+
 
    }
 }

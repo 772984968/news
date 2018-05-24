@@ -40,7 +40,8 @@
 					<select name="{$vo['key']}" lay-verify="">
 					 {volist
 						name="vo['option']" id="select"}
-						<option value="{$select['id']}">{$select['name']}</option>
+						<option value="{$select['id']}" {eq name="$select['id']" value="$vo['value']"}selected="selected"{/eq}>{$select['category']}</option>
+
 						{/volist}
 					</select>
 				</div>

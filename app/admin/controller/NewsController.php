@@ -19,6 +19,7 @@ class NewsController extends TemplateController
      'title_url',
      'top',
      'sort',
+         'category_id',
      'created_at',
      ], // 查询的字段
      'bars' => [
@@ -42,6 +43,7 @@ class NewsController extends TemplateController
          ['field'=>'title_url','title'=>'封面图片'],
          ['field'=>'top','title'=>'是否置顶'],
          ['field'=>'sort','title'=>'排序','sort'=>true],
+            ['field'=>'category_id','title'=>'新闻类型','sort'=>true],
          ['field'=>'created_at','title'=>'发布时间','sort'=>true],
          ['field'=>'right','title'=>'数据操作','align'=>'center','toolbar'=>'#barDemo','width'=>300],
          ]];
@@ -52,6 +54,7 @@ class NewsController extends TemplateController
     public function getOption()
     {
         $city=Db('city')->field('id,name')->select();
+        $category=Db('category')->field('id,category')->select();
          return [
               ['key'=>'title','title'=>'标题','value'=>'','html'=>'text','option'=>['placeholder'=>'请输入标题']],
               ['key'=>'title_url','title'=>'封面图片','value'=>'','html'=>'upload','option'=>''],
@@ -64,6 +67,7 @@ class NewsController extends TemplateController
               ['key'=>'created_at','title'=>'发布日期','value'=>'','html'=>'date','option'=>''],
              ['key'=>'sort','title'=>'排序','value'=>'0','html'=>'text','option'=>''],
               ['key'=>'cities','title'=>'归属城市','value'=>'','html'=>'checkbox','option'=>$city],
+              ['key'=>'category_id','title'=>'新闻类型','value'=>'','html'=>'select','option'=>$category],
 
           ];
     }
@@ -106,7 +110,7 @@ class NewsController extends TemplateController
             if($model->allowField(true)->isUpdate(true)->save($data)){
 
                 $model->city()->sync($data['cities']);
-                return  json(['code'=>200,'msg'=>'添加成功']);
+                return  json(['code'=>200,'msg'=>'修改成功']);
             }else{
                 return json(['code'=>400,'msg'=>$model->getError]);
             }
