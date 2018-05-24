@@ -109,7 +109,7 @@ class NewsController extends TemplateController
             }
             if($model->allowField(true)->isUpdate(true)->save($data)){
 
-                $model->city()->sync($data['cities']);
+             //   $model->city()->sync($data['cities']);
                 return  json(['code'=>200,'msg'=>'修改成功']);
             }else{
                 return json(['code'=>400,'msg'=>$model->getError]);
