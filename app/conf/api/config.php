@@ -32,7 +32,7 @@ return
             //端口号
             'port'       => 6379,
             // 密码
-            'password'   => '123456',
+            'password'   => '',
 
             'timeout'=> 0,
             //选择数据库
