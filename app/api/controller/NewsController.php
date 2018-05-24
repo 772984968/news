@@ -19,16 +19,17 @@ class NewsController extends BaseController
          //类型
         $data['category']=Category::order('sort','desc')->select();
         //banner
-        $data['banner']=News::where('top',1)->select();
+        $data['banner']=News::where('top',1)->field(['title_url','id','title'])->select();
         if ($this->request->has('city')){
             $city=$this->request->get('city');
             $city=City::where('name',$city)->find();
+
             $news_ids=NewsCity::where('city_id',$city['id'])->column('news_id');
-            $sql=News::where('id','in',$news_ids);
+            $sql=News::where('id','in',$news_ids)->field(['id','title','title_url','info']);
             if ($this->request->has('category_id')){
                 $sql->where('category_id',input('category_id'));
             }
-            $data['news']=$sql->order('created_at','desc')->paginate(10);
+            $data['news']=$sql->order('created_at','desc')->paginate(2);
          return   static ::jsonSuccess($data);
         }
         return static::jsonError('参数错误','404');
