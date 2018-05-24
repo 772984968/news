@@ -15,7 +15,7 @@ use app\lib\factory\Factory;
 class NewsController extends BaseController
 {
     public function  index(){
-        $data=[];
+       $data=[];
          //类型
         $data['category']=Category::order('sort','desc')->select();
         //banner
@@ -36,7 +36,7 @@ class NewsController extends BaseController
 
     //城市定位
     public function location(){
-        if ($this->request->has('city')){
+             if ($this->request->has('city')){
             $city=City::where('name',input('city'))->find();
             if ($city){
                 return static::jsonSuccess($city);

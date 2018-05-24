@@ -15,7 +15,8 @@ use think\Cache;
 class BaseController extends Controller
 {
     public  function _initialize(){
-
+        header("Access-Control-Allow-Origin:*");
+        header("Access-Control-Allow-Credentials : true");
         $route=$this->request->controller().'/'.$this->request->action();
         $route = $route ? $route : 'Index/index';
         //不需要登录的方法
@@ -70,8 +71,7 @@ class BaseController extends Controller
             header("Access-Control-Allow-Credentials : true");
         }
         header('Content-type: application/json');
-        echo json_encode(['code'=>$code,'msg'=>$msg,'data'=>$data]);
-      die();
+       return json(['code'=>$code,'msg'=>$msg,'data'=>$data]);
 
    }
    //返回成功信息

@@ -100,8 +100,6 @@ class NewsController extends TemplateController
         $model=new $this->config['modelName'];
         if ($this->request->isAjax()){
             $data=input('post.');
-            $model=new $this->config['modelName'];
-
             $result = $this->validate($data,'News.add');
             if(true !== $result){
                 return json(['code'=>400,'msg'=>$result]);
