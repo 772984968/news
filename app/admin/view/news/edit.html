@@ -122,6 +122,16 @@
 	</div>
 	</div>
 	{/case}
+        {case value="hidden" break="1"}
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+        <input type="hidden" name="{$vo['key']}" lay-verify=""  value="{$vo['value']}"   {notempty name="$vo['option']['placeholder']"}
+        placeholder="{$vo['option']['placeholder']}"
+        {/notempty} autocomplete="off" class="layui-input">
+        </div>
+        </div>
+            {/case}
 	{default/}
 	<div class="layui-form-item">
     <label class="layui-form-label">{$vo['title']}</label>
