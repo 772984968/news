@@ -23,6 +23,7 @@ class NewsController extends TemplateController
      'info',
      'sort',
          'category_id',
+         'city_id',
      'created_at',
      ], // 查询的字段
      'bars' => [
@@ -54,7 +55,7 @@ class NewsController extends TemplateController
             $paramas=input('id');
             $where['id']=['like','%'.$paramas.'%'];
         }
-        $paginate=$model::with('category')->field($this->config['field'])->where($where)->paginate($limit,false,['page'=>$page]);
+        $paginate=$model::with('category,city')->field($this->config['field'])->where($where)->paginate($limit,false,['page'=>$page]);
         $data=$paginate->toArray();
          return json(['code'=>0,'msg'=>'','count'=>$data['total'],'data'=>$data['data']]);
 
@@ -74,6 +75,7 @@ class NewsController extends TemplateController
          ['field'=>'sort','title'=>'排序','sort'=>true],
             ['field'=>'category_id','title'=>'新闻类型','sort'=>true, 'templet'=>'#categoryTpl'],
          ['field'=>'created_at','title'=>'发布时间','sort'=>true],
+            ['field'=>'city_id','title'=>'所属城市','sort'=>true,'templet'=>'#cityTpl'],
          ['field'=>'right','title'=>'数据操作','align'=>'center','toolbar'=>'#barDemo','width'=>300],
          ]];
 
@@ -97,8 +99,8 @@ class NewsController extends TemplateController
               ],
               ['key'=>'created_at','title'=>'发布日期','value'=>'','html'=>'date','option'=>''],
              ['key'=>'sort','title'=>'排序','value'=>'0','html'=>'text','option'=>''],
-              ['key'=>'cities','title'=>'归属城市','value'=>'','html'=>'checkbox','option'=>$city],
-              ['key'=>'category_id','title'=>'新闻类型','value'=>'','html'=>'select','option'=>$category],
+              ['key'=>'city_id','title'=>'归属城市','value'=>'','html'=>'city','option'=>$city],
+              ['key'=>'category_id','title'=>'新闻类型','value'=>'','html'=>'category','option'=>$category],
 
           ];
     }
@@ -112,7 +114,7 @@ class NewsController extends TemplateController
                 return json(['code'=>400,'msg'=>$result]);
             }
             if($model->allowField(true)->save($data)){
-               $model->city()->sync($data['cities']);
+             //  $model->city()->sync($data['cities']);
                 return  json(['code'=>200,'msg'=>'添加成功']);
             }else{
                 return json(['code'=>400,'msg'=>$model->getError]);
@@ -136,16 +138,14 @@ class NewsController extends TemplateController
                 return json(['code'=>400,'msg'=>$result]);
             }
             if($model->allowField(true)->isUpdate(true)->save($data)){
-
-                $model->city()->sync($data['cities']);
-                return  json(['code'=>200,'msg'=>'修改成功']);
+              return  json(['code'=>200,'msg'=>'修改成功']);
             }else{
                 return json(['code'=>400,'msg'=>$model->getError]);
             }
         }
         $attribute=$model->get(function ($query) {
             $query->where(['id'=>input('id')]);
-        },'city');
+        });
         $option=$this->getOption();
         foreach ($option as $key=>$vo){
             if (isset($attribute[$vo['key']])){
@@ -153,11 +153,9 @@ class NewsController extends TemplateController
             }
         }
         //所属城市
-        $city=array_column($attribute->city,'id');
         $option[]=['key'=>'id','title'=>'用户ID','value'=>$attribute['id'],'html'=>'hidden'];
         $data['option']=$option;
         $data['config']=$this->config;
-        $data['city']=$city;
         $this->assign('data',$data);
         return $this->fetch();
 
@@ -167,7 +165,6 @@ class NewsController extends TemplateController
         $model=new $this->config['modelName'];
         $ids=$this->request->post('id');
         if($model::destroy($ids)){
-            NewsCity::where('news_id',$ids)->delete();
             return  json(['code'=>200,'msg'=>'删除成功']);
         }else{
             return json(['code'=>400,'msg'=>$model->getError]);

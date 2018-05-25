@@ -33,19 +33,32 @@
 				  </div>
 			{/case}
 			<!-- select -->
-			{case value="select" break="1"}
+			{case value="city" break="1"}
 			<div class="layui-form-item">
 				<label class="layui-form-label">{$vo['title']}</label>
 				<div class="layui-input-inline">
 					<select name="{$vo['key']}" lay-verify="">
 					 {volist
 						name="vo['option']" id="select"}
-						<option value="{$select['id']}">{$select['category']}</option>
+						<option value="{$select['id']}">{$select['name']}</option>
 						{/volist}
 					</select>
 				</div>
 			</div>
 			{/case}
+	{case value="category" break="1"}
+	<div class="layui-form-item">
+		<label class="layui-form-label">{$vo['title']}</label>
+		<div class="layui-input-inline">
+			<select name="{$vo['key']}" lay-verify="">
+				{volist
+				name="vo['option']" id="select"}
+				<option value="{$select['id']}">{$select['category']}</option>
+				{/volist}
+			</select>
+		</div>
+	</div>
+	{/case}
 			<!-- radio -->
 	{case value="radio" break="1"}
 			<div class="layui-form-item">

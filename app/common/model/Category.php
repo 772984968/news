@@ -10,6 +10,9 @@ class Category extends Model
     public function news(){
         return $this->hasMany('News');
     }
+    public function city(){
+        return $this->belongsTo('City');
+    }
 
 
 }

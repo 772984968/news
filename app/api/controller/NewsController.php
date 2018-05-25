@@ -15,23 +15,24 @@ use app\lib\factory\Factory;
 class NewsController extends BaseController
 {
     public function  index(){
-       $data=[];
-         //类型
-        $data['category']=Category::order('sort','desc')->select();
-        //banner
-        $data['banner']=News::where('top',1)->field(['title_url','id','title'])->select();
-        if ($this->request->has('city')){
-            $city=$this->request->get('city');
-            $city=City::where('name',$city)->find();
-
-            $news_ids=NewsCity::where('city_id',$city['id'])->column('news_id');
-            $sql=News::where('id','in',$news_ids)->field(['id','title','title_url','info','sort']);
-            if ($this->request->has('category_id')){
-                $sql->where('category_id',input('category_id'))->order('sort','desc');
-            }
-            $data['news']=$sql->order('created_at','desc')->paginate(5);
-         return   static ::jsonSuccess($data);
+        $data=input('get.');
+        $result = $this->validate($data,'News.api');
+        if(true !== $result){
+            return json(['code'=>400,'msg'=>$result]);
         }
+       $rs=[];
+         //类型
+        $rs['category']=Category::where('city_id',$data['city_id'])->order('sort','desc')->select();
+
+        //banner
+        $rs['banner']=News::where('top',1)->field(['title_url','id','title'])->select();
+         $sql=News::where('city_id',$data['city_id'])->field(['id','title','title_url','info','sort','city_id','created_at','category_id']);
+            if ($this->request->has('category_id')){
+                $sql->where('category_id',input('category_id'));
+            }
+            $rs['news']=$sql->order(['sort'=>'desc','created_at'=>'desc'])->paginate(3);
+         return   static ::jsonSuccess($rs);
+
         return static::jsonError('参数错误','404');
     }
 

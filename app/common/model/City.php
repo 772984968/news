@@ -15,7 +15,7 @@ class City extends Model
     }
     public function news()
     {
-        return $this->belongsToMany('News','news_city');
+        return $this->hasMany('News');
     }
 
 }
