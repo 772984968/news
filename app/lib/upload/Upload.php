@@ -56,7 +56,7 @@ class  Upload{
 
             if(move_uploaded_file($this->fileInfo['tmp_name'], $this->destination)){
                 //裁剪图片
-                $this->crop($this->destination);
+               // $this->crop($this->destination);
                 return  true;
             }
             return $this->error;
