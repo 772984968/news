@@ -25,11 +25,11 @@ class NewsController extends BaseController
             $city=City::where('name',$city)->find();
 
             $news_ids=NewsCity::where('city_id',$city['id'])->column('news_id');
-            $sql=News::where('id','in',$news_ids)->field(['id','title','title_url','info']);
+            $sql=News::where('id','in',$news_ids)->field(['id','title','title_url','info','sort']);
             if ($this->request->has('category_id')){
-                $sql->where('category_id',input('category_id'));
+                $sql->where('category_id',input('category_id'))->order('sort','desc');
             }
-            $data['news']=$sql->order('created_at','desc')->paginate(2);
+            $data['news']=$sql->order('created_at','desc')->paginate(5);
          return   static ::jsonSuccess($data);
         }
         return static::jsonError('参数错误','404');
@@ -58,6 +58,12 @@ class NewsController extends BaseController
             return static ::jsonSuccess($news);
         }
         return static::jsonError('参数错误');
+
+    }
+    //切换城市
+    public function ListCity(){
+        $cities=City::all();
+      return  static::jsonSuccess($cities);
 
     }
 

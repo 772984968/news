@@ -11,6 +11,8 @@ return [
         'News/location',
         //新闻详情
         'News/detail',
+        //新闻详情
+        'News/ListCity',
     ],
     //需要验证权限的方法
    'check'=>[
