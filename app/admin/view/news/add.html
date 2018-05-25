@@ -37,7 +37,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">{$vo['title']}</label>
 				<div class="layui-input-inline">
-					<select name="{$vo['key']}" lay-verify="">
+					<select name="{$vo['key']}" lay-filter="city">
 					 {volist
 						name="vo['option']" id="select"}
 						<option value="{$select['id']}">{$select['name']}</option>
@@ -50,11 +50,8 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">{$vo['title']}</label>
 		<div class="layui-input-inline">
-			<select name="{$vo['key']}" lay-verify="">
-				{volist
-				name="vo['option']" id="select"}
-				<option value="{$select['id']}">{$select['category']}</option>
-				{/volist}
+			<select name="category_id" lay-verify="" id="category">
+			<option value=""></option>
 			</select>
 		</div>
 	</div>
@@ -109,7 +106,7 @@
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">新闻内容</label>
     <div class="layui-input-block">
-		<script id="container" name="{$vo['key']}" type="text/plain" style="width:1024px;height:500px" >
+		<script id="container" name="{$vo['key']}" type="text/plain" >
         这里填写新闻内容
 		</script>
     </div>
@@ -144,7 +141,7 @@
   </div>
 			{/switch}
         	{/volist}
-  <div class="layui-form-item">
+<div class="layui-form-item">
     <div class="layui-input-block">
       <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
       <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -156,6 +153,18 @@
 <script>
 layui.use('form', function(){
   var form = layui.form;
+  //二级联动
+    form.on('select(city)', function(data){
+        $.getJSON("{:url('news/getCategory')}?pid="+data.value, function(data){
+            var optionstring = "";
+            $.each(data.data, function(i,item){
+                optionstring += "<option value=\"" + item.id + "\" >" + item.category + "</option>";
+            });
+            $("#category").html('<option value=""></option>' + optionstring);
+            form.render('select'); //这个很重要
+        });
+    })
+
   //监听提交
   form.on('submit(formDemo)', function(formdata){
 	  var url=$('.layui-form').attr('action');
@@ -234,7 +243,10 @@ layui.use('laydate', function(){
 <script src="__static__/plugins/ueditor/ueditor.config.js"></script>
 <script src="__static__/plugins/ueditor/ueditor.all.js"></script>
 <script >
-    var ue = UE.getEditor('container');
+    var ue = UE.getEditor('container',{
+        initialFrameWidth : 1024,
+        initialFrameHeight: 500
+    });
 </script>
 </body>
 </html>

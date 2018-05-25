@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\common\model\Category;
 use app\common\model\News;
 use app\common\model\NewsCity;
 use think\Controller;
@@ -82,10 +83,9 @@ class NewsController extends TemplateController
     }
 
 
-    public function getOption()
+    public function getOption($category=[])
     {
         $city=Db('city')->field('id,name')->select();
-        $category=Db('category')->field('id,category')->select();
          return [
               ['key'=>'title','title'=>'标题','value'=>'','html'=>'text','option'=>['placeholder'=>'请输入标题']],
               ['key'=>'title_url','title'=>'封面图片','value'=>'','html'=>'upload','option'=>''],
@@ -146,7 +146,8 @@ class NewsController extends TemplateController
         $attribute=$model->get(function ($query) {
             $query->where(['id'=>input('id')]);
         });
-        $option=$this->getOption();
+        $category=Db('category')->where('city_id',$attribute->city_id)->field('id,category')->select();
+        $option=$this->getOption($category);
         foreach ($option as $key=>$vo){
             if (isset($attribute[$vo['key']])){
                 $option[$key]['value']=$attribute->getData($vo['key']);
@@ -170,5 +171,13 @@ class NewsController extends TemplateController
             return json(['code'=>400,'msg'=>$model->getError]);
         }
     }
+    //获取类型
+    public function getCategory(){
+        if (input('pid')){
+            $data=Category::where('city_id',input('pid'))->select();
+            return json(['status'=>200,'message'=>'success','data'=>$data]);
+        }
+
+}
 
 }
