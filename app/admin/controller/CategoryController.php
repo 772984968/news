@@ -73,7 +73,7 @@ class CategoryController extends TemplateController
     public function add(){
         if ($this->request->isAjax()){
             $model=new $this->config['modelName'];
-            if ($model->where('category',$this->request->post('category'))->find()){
+            if ($model->where(['category'=>$this->request->post('category'),'city_id'=>input('city_id')])->find()){
                 return json(['code'=>400,'msg'=>'类别已存在']);
             }
             if($model->allowField(true)->save(input('post.'))){
