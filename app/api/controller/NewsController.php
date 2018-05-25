@@ -29,9 +29,7 @@ class NewsController extends BaseController
          $sql=News::where('city_id',$data['city_id'])->field(['id','title','title_url','info','sort','city_id','created_at','category_id']);
             if ($this->request->has('category_id')){
                 $sql->where('category_id',input('category_id'));
-            }else{
-                $sql->where('category_id',$rs['category'][0]['id']);
-           }
+            }
             $rs['news']=$sql->order(['sort'=>'desc','created_at'=>'desc'])->paginate(5);
          return   static ::jsonSuccess($rs);
 
