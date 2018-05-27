@@ -25,7 +25,7 @@ class NewsController extends BaseController
         $rs['category']=Category::where('city_id',$data['city_id'])->order('sort','desc')->select();
 
         //banner
-        $rs['banner']=News::where('top',1)->field(['title_url','id','title'])->select();
+        $rs['banner']=News::where(['top'=>1,'city_id'=>$data['city_id']])->field(['title_url','id','title','city_id'])->select();
          $sql=News::where('city_id',$data['city_id'])->field(['id','title','title_url','info','sort','city_id','created_at','category_id']);
             if ($this->request->has('category_id')){
                 $sql->where('category_id',input('category_id'));
