@@ -30,6 +30,12 @@ class LoginController extends Controller
                 'code' => 400,
                 'msg' => '用户名或密码错误']);
         }
+
+        if ($rs->state=='禁用') {
+            return json([
+                'code' => 400,
+                'msg' => '用户已被禁用，请联系管理员']);
+        }
        session('username',$rs->username);
        session('adminId',$rs->id);
        //添加登录日志
