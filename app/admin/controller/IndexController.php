@@ -7,7 +7,7 @@ class IndexController extends BaseController
     //系统首页
     public function index()
     {
-        return $this->fetch();
+          return $this->fetch();
     }
 
     //菜单默认页
