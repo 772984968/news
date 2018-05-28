@@ -120,7 +120,9 @@ class NewsController extends TemplateController
                 return json(['code'=>400,'msg'=>$model->getError]);
             }
         }
-        $data['option']=$this->getOption();
+        $city_id=Db('city')->find();
+        $category=Db('category')->where('city_id',$city_id['id'])->field('id,category')->select();
+        $data['option']=$this->getOption($category);
         $data['config']=$this->config;//获取配置
         $this->assign('data',$data);
         return   $this->fetch();

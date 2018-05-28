@@ -51,7 +51,10 @@
 		<label class="layui-form-label">{$vo['title']}</label>
 		<div class="layui-input-inline">
 			<select name="category_id" lay-verify="" id="category">
-			<option value=""></option>
+				{volist
+				name="vo['option']" id="select"}
+				<option value="{$select['id']}">{$select['category']}</option>
+				{/volist}
 			</select>
 		</div>
 	</div>
