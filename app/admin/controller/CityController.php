@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\common\model\Category;
 use app\common\model\News;
 use app\common\model\NewsCity;
 use think\Controller;
@@ -76,7 +77,7 @@ class CityController extends TemplateController
         $model=new $this->config['modelName'];
         $ids=$this->request->post('id');
         if($model::destroy($ids)){
-            NewsCity::where('city_id',$ids)->delete();
+            Category::where('city_id',$ids)->delete();
             return  json(['code'=>200,'msg'=>'删除成功']);
         }else{
             return json(['code'=>400,'msg'=>$model->getError]);
