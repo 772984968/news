@@ -68,11 +68,13 @@ class NewsController extends TemplateController
          ['type'=>'checkbox'],
          ['field'=>'id','title'=>'ID','sort'=>true],
          ['field'=>'title','title'=>'新闻标题'],
+            /*
          ['field'=>'content','title'=>'新闻内容'],
-         ['field'=>'title_url','title'=>'封面图片'],
+         ['field'=>'title_url','title'=>'封面图片'],*/
          ['field'=>'top','title'=>'是否置顶'],
+            /*
             ['field'=>'info','title'=>'文章描述'],
-            ['field'=>'derivation','title'=>'文章来源'],
+            ['field'=>'derivation','title'=>'文章来源'],*/
          ['field'=>'sort','title'=>'排序','sort'=>true],
             ['field'=>'category_id','title'=>'新闻类型','sort'=>true, 'templet'=>'#categoryTpl'],
          ['field'=>'created_at','title'=>'发布时间','sort'=>true],

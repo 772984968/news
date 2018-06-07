@@ -41,11 +41,7 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                    {notempty name="$data['config']['add']['url']"}
-                        <div class="">
-                            <a onclick="layer_show('{$data['config']['add']['title']}','{:url($data['config']['add']['url'])}')" href="javascript:void(0);" class="btn btn-primary glyphicon glyphicon-plus ">{$data['config']['add']['title']}</a>
-                        </div>
-  					 {/notempty}
+
   					  {notempty name="$data['search']"}
                      <div class="demoTable">  搜索：
  <div class="layui-input-inline" >
@@ -64,6 +60,9 @@
  {/notempty}
     {notempty name="$data['config']['delall']['url']"}
    <div  class="layui-btn-group demoTable2">
+       {notempty name="$data['config']['add']['url']"}
+           <a onclick="layer_show('{$data['config']['add']['title']}','{:url($data['config']['add']['url'])}')" href="javascript:void(0);" class="btn btn-primary glyphicon glyphicon-plus ">{$data['config']['add']['title']}</a>
+       {/notempty}
    <button class="layui-btn layui-btn-danger" data-type="getCheckData">{$data['config']['delall']['title']}</button>
    </div>
  {/notempty}
