@@ -66,8 +66,8 @@ class NewsController extends TemplateController
     {
         return [[
          ['type'=>'checkbox'],
-         ['field'=>'id','title'=>'ID','sort'=>true],
-         ['field'=>'title','title'=>'新闻标题'],
+         ['field'=>'id','title'=>'ID','sort'=>true,'width'=>60],
+         ['field'=>'title','title'=>'新闻标题','width'=>600],
             /*
          ['field'=>'content','title'=>'新闻内容'],
          ['field'=>'title_url','title'=>'封面图片'],*/
